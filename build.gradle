@@ -1,0 +1,21 @@
+apply plugin: 'scala'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.scala-lang:scala-library:2.13.+'
+	implementation 'org.scala-lang.modules:scala-jline:+'
+}
+
+compileScala {
+	options.encoding = 'UTF-8'
+}
+
+jar {
+	manifest.attributes 'Main-Class': 'Main'
+	from configurations.compileClasspath.collect {
+		it.isDirectory()? it: zipTree(it)
+	}
+}
